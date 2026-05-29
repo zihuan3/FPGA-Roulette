@@ -1,3 +1,5 @@
+// Debouncer module to clean up noisy input signals
+
 module debouncer #(
     parameter CLK_FRQ    = 100_000_000,
     parameter SAMPLE_FRQ = 1000
@@ -8,6 +10,7 @@ module debouncer #(
     output reg  clean_out
 );
 
+    // Synchronize the input signal to the clock domain
     reg sync_ff1, sync_ff2;
 
     always @(posedge clk or posedge rst) begin
@@ -20,7 +23,7 @@ module debouncer #(
         end
     end
 
-    /* clock divider */
+    // clock divider
     localparam DIVISOR = CLK_FRQ / SAMPLE_FRQ;
 
     reg [$clog2(DIVISOR)-1:0] counter;
@@ -41,6 +44,7 @@ module debouncer #(
         end
     end
 
+    // Sample the synchronized signal at the defined sample frequency
     always @(posedge clk or posedge rst) begin
         if (rst) begin
             clean_out <= 0;
