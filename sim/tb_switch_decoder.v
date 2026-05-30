@@ -234,14 +234,10 @@ module tb_switch_decoder;
 
         release_confirm;
 
-        $display("--------------------------------------------");
-
         if (failures == 0)
             $display("ALL SWITCH_DECODER TESTS PASSED.");
         else
             $display("%0d SWITCH_DECODER TEST(S) FAILED.", failures);
-
-        $display("--------------------------------------------");
 
         $finish;
     end

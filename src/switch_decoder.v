@@ -1,12 +1,3 @@
-// Decodes switches SW0-SW13 into a single valid player move.
-//
-// Game rule supported by this module:
-// - Once a switch has been successfully selected, it stays raised
-//   for the rest of the match.
-// - Each new move must add exactly one new raised switch.
-// - Previously selected switches may not be lowered during a match.
-// - The center button confirms the player's attempted move.
-
 module switch_decoder (
     input  wire        clk,
     input  wire        rst,
@@ -16,14 +7,13 @@ module switch_decoder (
     input  wire        clear_used,
 
     // High only when the game controller is accepting player moves.
-    // For example, this should be low during LOSE or the animation.
     input  wire        accept_moves,
 
     // Debounced center-button level.
     // This module converts it into a one-cycle press event internally.
     input  wire        confirm_btn,
 
-    // Physical positions of SW0-SW13.
+    // Positions of SW0-SW13.
     input  wire [13:0] game_switches,
 
     // Pulses high for one cycle when a valid new switch is confirmed.
@@ -51,11 +41,15 @@ module switch_decoder (
     assign confirm_press = confirm_btn && !confirm_btn_prev;
 
     // Bits that are currently raised but have not already been used.
+    // This is so the module can tell which new switch the current 
+    // player is trying to select, even though old safe switches are 
+    // still physically raised.
     wire [13:0] newly_raised_switches;
     assign newly_raised_switches = game_switches & ~used_switches;
 
     // Detects whether a player lowered a previously accepted switch.
-    // That is illegal because safe switches stay raised for the match.
+    // That is illegal because our implementation wants safe switches 
+    // to stay raised for the match.
     wire lowered_used_switch;
     assign lowered_used_switch = |(used_switches & ~game_switches);
 
