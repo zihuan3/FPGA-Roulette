@@ -52,10 +52,5 @@ FPGA-Roulette/
 │   └── tb_score_keeper.v       # Score tracking tests
 │
 ├── synth/                      # Vivado project and output files (gitignored except sources)
-│   └── .gitkeep
-│
-└── docs/
-    ├── proposal.md             # Original project proposal
-    ├── fsm_diagram.pdf         # State machine diagram
-    └── block_diagram.pdf       # Top-level block diagram
+    └── .gitkeep
 ```
