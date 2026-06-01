@@ -84,6 +84,7 @@ function [6:0] digit_to_seg;
     endcase
 endfunction
 
+// Update the digit segments based on the display mode
 always@(*) begin
     case (display_mode)
         MODE_SAFE: begin
