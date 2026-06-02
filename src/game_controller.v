@@ -28,6 +28,7 @@ module game_controller #(
     output reg  [2:0]  display_mode
 );
 
+    // Internal states for the match flow.
     localparam STATE_SETUP     = 3'd0;
     localparam STATE_WAIT_MOVE = 3'd1;
     localparam STATE_COUNTDOWN = 3'd2;
@@ -35,6 +36,7 @@ module game_controller #(
     localparam STATE_LOSE      = 3'd4;
     localparam STATE_INVALID   = 3'd5;
 
+    // Display modes are passed to display_controller so the screen matches the current gameplay state.
     localparam DISP_SETUP      = 3'd0;
     localparam DISP_WAIT       = 3'd1;
     localparam DISP_COUNTDOWN  = 3'd2;
@@ -52,6 +54,7 @@ module game_controller #(
     wire btn_right_press;
     wire selected_is_mine;
 
+    // Edge-detect the mine-count buttons
     assign btn_left_press  = btn_left && !btn_left_prev;
     assign btn_right_press = btn_right && !btn_right_prev;
     assign selected_is_mine = |(latched_switch & mine_mask);
@@ -93,6 +96,7 @@ module game_controller #(
             end else begin
                 case (state)
                     STATE_SETUP: begin
+                        // left/right buttons choose the mine count
                         accept_moves <= game_mode;
                         match_lost   <= 1'b0;
                         display_mode <= DISP_SETUP;
@@ -118,6 +122,7 @@ module game_controller #(
                     end
 
                     STATE_WAIT_MOVE: begin
+                        // Turn state after setup or SAFE/INVALID results.
                         accept_moves <= game_mode;
                         display_mode <= DISP_WAIT;
 
@@ -136,6 +141,7 @@ module game_controller #(
                     end
 
                     STATE_COUNTDOWN: begin
+                        // Freeze input during reveal animation and check if the mine was selected.
                         accept_moves <= 1'b0;
                         display_mode <= DISP_COUNTDOWN;
 
@@ -155,6 +161,7 @@ module game_controller #(
                     end
 
                     STATE_SAFE: begin
+                        // Show SAFE and swap players
                         accept_moves <= 1'b0;
                         display_mode <= DISP_SAFE;
 
@@ -169,6 +176,7 @@ module game_controller #(
                     end
 
                     STATE_INVALID: begin
+                        // Show an error but don't change player
                         accept_moves <= 1'b0;
                         display_mode <= DISP_INVALID;
 
@@ -182,6 +190,7 @@ module game_controller #(
                     end
 
                     STATE_LOSE: begin
+                        // Loss ends the match until reset toggle is hit.
                         accept_moves <= 1'b0;
                         match_lost   <= 1'b1;
                         display_mode <= DISP_LOSE;

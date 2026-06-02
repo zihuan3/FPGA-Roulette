@@ -1,3 +1,5 @@
+// Generates the hidden mine layout for switches SW0-SW13.
+// A small LFSR keeps changing every clock to generate a roughly random starting point
 module mine_generator (
     input  wire       clk,
     input  wire       rst,
@@ -12,6 +14,7 @@ module mine_generator (
     integer idx;
     reg [13:0] next_mask;
 
+    // Feedback taps for the 16-bit LFSR.
     wire feedback;
     assign feedback = lfsr[15] ^ lfsr[13] ^ lfsr[12] ^ lfsr[10];
 

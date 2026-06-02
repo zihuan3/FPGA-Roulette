@@ -14,6 +14,7 @@ module mode_controller (
     reg reset_toggle_prev;
 
     assign game_mode       = ~score_mode;
+    // Only allow mode/reset toggles when all game switches are lowered.
     assign toggles_allowed = (game_switches == 14'b0);
 
     always @(posedge clk or posedge rst) begin
