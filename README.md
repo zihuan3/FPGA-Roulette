@@ -6,17 +6,20 @@ Each game/match is initialized with player-specified number of landmines placed 
 
 # Game State/Modes
 Game Mode
-- Switch 14 = 0
 - Active mode for gameplay
+- Switches 15 and 14 must remain low
+- All switches initially low
+- To choose a switch, flip it and press BTNC
 
 Score Mode
+- Enable options
 - Switch 14 = 1
-- Pause gameplay and enable button functionality for options
+- All other switches low
 
 # Controls
 - Switches 0-13:    Player/landmine switches
 - Switch 14:        Score/game mode toggle
-- Switch 15:        Match reset toggle
+- Switch 15:        Match reset toggle. + BTNC for hard reset
 - BTNC (Mid)        Confirm switch flip
 - BTNL (Left)       Decrease mine count at match start. Hard reset in Score Mode
 - BTNR (Right)      Increase mine count at match start
