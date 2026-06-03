@@ -1,5 +1,5 @@
 module top #(
-    parameter COUNTDOWN_STEP_TICKS = 25_000_000,
+    parameter COUNTDOWN_STEP_TICKS = 100_000_000,
     parameter RESULT_TICKS         = 100_000_000,
     parameter DEBOUNCE_CLK_FRQ     = 100_000_000,
     parameter DEBOUNCE_SAMPLE_FRQ  = 1000
@@ -57,10 +57,18 @@ module top #(
     wire clear_used;
     wire regenerate_mines;
 
+    wire [6:0] seg_internal;
+    wire hard_reset;
+    wire match_reset_only;
+
     assign startup_rst = ~startup_counter[15];
-    assign score_reset = hard_reset_pulse | (score_mode && btnL_clean);
-    assign clear_used = clear_used_game | hard_reset_pulse;
-    assign regenerate_mines = regenerate_mines_game | hard_reset_pulse;
+    assign score_reset = hard_reset | (score_mode && btnL_clean);
+    assign clear_used = clear_used_game | hard_reset;
+    assign regenerate_mines = regenerate_mines_game | hard_reset;
+    assign seg = {seg_internal[0], seg_internal[1], seg_internal[2], 
+                  seg_internal[3], seg_internal[4], seg_internal[5], seg_internal[6]};
+    assign hard_reset = hard_reset_pulse && btnC_clean;
+    assign match_reset_only = hard_reset_pulse && !btnC_clean;
 
     always @(posedge clk) begin
         if (!startup_counter[15])
@@ -208,7 +216,7 @@ module top #(
         .mine_count(mine_count),
         .current_player(current_player),
         .countdown_dp_mask(countdown_dp_mask),
-        .seg(seg),
+        .seg(seg_internal),
         .an(an),
         .dp(dp)
     );

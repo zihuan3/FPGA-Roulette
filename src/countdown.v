@@ -17,7 +17,7 @@ module countdown #(
         if (rst) begin
             active     <= 1'b0;
             done       <= 1'b0;
-            dp_mask    <= 4'b0000;
+            dp_mask    <= 4'b1000;
             step       <= 2'd0;
             tick_count <= 32'd0;
         end else begin
@@ -28,7 +28,7 @@ module countdown #(
                 active     <= 1'b1;
                 step       <= 2'd0;
                 tick_count <= 32'd0;
-                dp_mask    <= 4'b0001;
+                dp_mask    <= 4'b1000;
             end else if (active) begin
                 if (tick_count >= STEP_TICKS - 1) begin
                     tick_count <= 32'd0;
@@ -40,13 +40,13 @@ module countdown #(
                         dp_mask <= 4'b0000;
                     end else begin
                         step    <= step + 2'd1;
-                        dp_mask <= 4'b0001 << (step + 2'd1);
+                        dp_mask <= 4'b1000 >> (step + 2'd1);
                     end
                 end else begin
                     tick_count <= tick_count + 32'd1;
                 end
             end else begin
-                dp_mask <= 4'b0000;
+                dp_mask <= 4'b1000 >> (step + 2'd1);
             end
         end
     end
