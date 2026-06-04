@@ -45,12 +45,9 @@ FPGA-Roulette/
 │   └── basys3.xdc              # Pin and timing constraints for the Basys 3 board
 │
 ├── sim/                        # Simulation/testbench files
-│   ├── tb_top.v                # Top-level testbench
-│   ├── tb_game_controller.v    # FSM unit tests
-│   ├── tb_mine_generator.v     # Mine randomization tests
-│   ├── tb_display_controller.v # Display output tests
-│   └── tb_score_keeper.v       # Score tracking tests
-│
-├── synth/                      # Vivado project and output files (gitignored except sources)
-    └── .gitkeep
+    ├── tb_top.v                # Top-level testbench
+    ├── tb_game_controller.v    # FSM unit tests
+    ├── tb_mine_generator.v     # Mine randomization tests
+    ├── tb_display_controller.v # Display output tests
+    └── tb_score_keeper.v       # Score tracking tests
 ```

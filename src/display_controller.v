@@ -5,6 +5,9 @@ module display_controller (
     input  wire       score_mode,
     input  wire       show_player1_score,
     input  wire       show_player2_score,
+// show_player2_score is held high by btnD_clean (level, not edge).
+// P1 score is shown by default; P2 score is shown only while btnD is held.
+// show_player1_score (btnU) is wired but unused — P1 is the default fallback.
     input  wire [3:0] player1_score,
     input  wire [3:0] player2_score,
 

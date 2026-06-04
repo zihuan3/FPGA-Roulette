@@ -24,7 +24,7 @@ module countdown #(
             done <= 1'b0;
 
             if (start && !active) begin
-                // Start with rightmost decimal point and advance one step every STEP_TICKS clocks.
+                // Start with leftmost decimal point and advance one step every STEP_TICKS clocks.
                 active     <= 1'b1;
                 step       <= 2'd0;
                 tick_count <= 32'd0;
