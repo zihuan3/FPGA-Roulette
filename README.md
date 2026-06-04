@@ -19,7 +19,7 @@ Score Mode
 # Controls
 - Switches 0-13:    Player/landmine switches
 - Switch 14:        Score/game mode toggle
-- Switch 15:        Match reset toggle. + BTNC for hard reset
+- Switch 15:        Match reset toggle. (+ BTNC for hard reset, flip down and up again to play.)
 - BTNC (Mid)        Confirm switch flip
 - BTNL (Left)       Decrease mine count at match start. Hard reset in Score Mode
 - BTNR (Right)      Increase mine count at match start
